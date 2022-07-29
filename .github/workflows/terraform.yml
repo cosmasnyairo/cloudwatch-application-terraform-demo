@@ -14,7 +14,7 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    environment: production
+    environment: staging
 
     steps:
     - name: Checkout
@@ -27,11 +27,13 @@ jobs:
     - name: Format
       run: terraform fmt -check
     
-    # Generates an execution plan for Terraform
-    - name: Plan
+    - name: Get tfvar file
       env:
         TFVARS_FILE: ${{ secrets.TFVARS_FILE }}
-      run: |
-        - touch terraform.tfvars 
+      run: 
         - echo $TFVARS_FILE base64 -d > terraform.tfvars 
+        
+    # Generates an execution plan for Terraform
+    - name: Terraform plan
+      run:
         - terraform plan -input=false -var-file=terraform.tfvars
