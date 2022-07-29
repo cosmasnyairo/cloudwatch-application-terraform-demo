@@ -34,6 +34,8 @@ jobs:
     
     # Generates an execution plan for Terraform
     - name: Plan
+      env:
+        TFVARS_FILE: ${{ secrets.TFVARS_FILE }}
       run: |
-        - echo ${{ secrets.TFVARS_FILE }} base64 -d > terraform.tfvars 
+        - echo $TFVARS_FILE base64 -d > terraform.tfvars 
         - terraform plan -input=false -var-file=terraform.tfvars
