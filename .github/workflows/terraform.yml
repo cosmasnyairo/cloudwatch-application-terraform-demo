@@ -16,11 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
-        shell: bash
-
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -37,5 +32,6 @@ jobs:
       env:
         TFVARS_FILE: ${{ secrets.TFVARS_FILE }}
       run: |
+        - touch terraform.tfvars 
         - echo $TFVARS_FILE base64 -d > terraform.tfvars 
         - terraform plan -input=false -var-file=terraform.tfvars
