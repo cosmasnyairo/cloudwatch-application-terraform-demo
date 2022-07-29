@@ -15,7 +15,7 @@ resource "aws_sns_topic_policy" "aws_event_notifications_policy" {
 }
 
 resource "aws_cloudwatch_log_group" "demogroup" {
-  name = var.log_group_name
+  name              = var.log_group_name
   retention_in_days = 1
   tags = merge(
     var.tags,
@@ -334,7 +334,7 @@ resource "aws_cloudwatch_metric_alarm" "CloudWatchAlarm" {
   comparison_operator = each.value.metric_comparison_operator
   treat_missing_data  = each.value.metric_treat_missing_data
   dimensions = {
-      "$.functioncalled" = "$.functioncalled"
+    "$.functioncalled" = "$.functioncalled"
   }
   tags = merge(
     var.tags,
@@ -345,11 +345,11 @@ resource "aws_cloudwatch_metric_alarm" "CloudWatchAlarm" {
 }
 
 resource "aws_cloudwatch_composite_alarm" "CompositeAlarm" {
-  
+
   alarm_description = var.composite_alarm_description
   alarm_name        = var.composite_alarm_name
   alarm_actions     = [aws_sns_topic.aws_event_notifications.arn]
-  alarm_rule        = var.alarm_rules               
+  alarm_rule        = var.alarm_rules
   tags = merge(
     var.tags,
     {

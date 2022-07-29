@@ -15,7 +15,7 @@ data "aws_iam_policy_document" "sns_topic_policy" {
     condition {
       test     = "StringEquals"
       variable = "AWS:SourceOwner"
-      values   = [var.account-id]
+      values   = sensitive([var.account-id])
     }
     effect = "Allow"
     principals {
