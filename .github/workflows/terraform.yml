@@ -34,4 +34,4 @@ jobs:
     
     # Generates an execution plan for Terraform
     - name: Plan
-      run: terraform plan -input=false  -var-file=${{ secrets.TFVARS_FILE }} 
+      run: terraform plan -input=false -var-file=${{ secrets.TFVARS_FILE }} 
