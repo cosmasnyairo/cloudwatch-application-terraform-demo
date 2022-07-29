@@ -359,5 +359,4 @@ resource "aws_cloudwatch_composite_alarm" "CompositeAlarm" {
   depends_on = [
     aws_cloudwatch_metric_alarm.CloudWatchAlarm
   ]
-  
 }
