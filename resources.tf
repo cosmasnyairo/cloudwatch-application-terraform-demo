@@ -15,7 +15,7 @@ resource "aws_sns_topic_policy" "aws_event_notifications_policy" {
 }
 
 resource "aws_cloudwatch_log_group" "demogroup" {
-  name = var.log_group_name
+  name              = var.log_group_name
   retention_in_days = 1
   tags = merge(
     var.tags,
@@ -41,7 +41,7 @@ resource "aws_cloudwatch_log_metric_filter" "MetricFilter" {
     value     = each.value.metric_value
     namespace = each.value.metric_namespace
     dimensions = {
-      "$.functioncalled" = "$.functioncalled"
+      "$.demoaction" = "$.demoaction"
     }
   }
 }
@@ -51,22 +51,24 @@ resource "aws_cloudwatch_dashboard" "main" {
 
   dashboard_body = <<EOF
 {
+  "periodOverride": "inherit", 
+  "liveDataOverride": "true",
   "widgets": [
     {
       "type": "metric",
-   "liveData": true,
-
+      
       "width": 6,
       "height": 8,
       "properties": {
         "sparkline": true,
         "metrics": [
-          ["DemoMetrics", "addProduct", "$.functioncalled", "addproduct"]
+          ["DemoMetrics", "addProduct", "$.demoaction", "addproduct"]
         ],
         "view": "gauge",
         "stacked": false,
         "stat": "SampleCount",
         "period": 86400,
+     "liveData": true,
         "yAxis": {
           "left": {
             "min": 5,
@@ -79,19 +81,19 @@ resource "aws_cloudwatch_dashboard" "main" {
     },
     {
       "type": "metric",
-   "liveData": true,
 
       "width": 6,
       "height": 8,
       "properties": {
         "sparkline": true,
         "metrics": [
-          ["DemoMetrics", "addDiscount", "$.functioncalled", "add_discount"]
+          ["DemoMetrics", "addDiscount", "$.demoaction", "add_discount"]
         ],
         "view": "gauge",
         "stacked": false,
         "stat": "SampleCount",
         "period": 86400,
+     "liveData": true,
         "yAxis": {
           "left": {
             "min": 5,
@@ -104,19 +106,20 @@ resource "aws_cloudwatch_dashboard" "main" {
     },
     {
       "type": "metric",
-   "liveData": true,
+   
 
       "width": 6,
       "height": 8,
       "properties": {
         "sparkline": true,
         "metrics": [
-          ["DemoMetrics", "addtoCart", "$.functioncalled", "addtocart"]
+          ["DemoMetrics", "addtoCart", "$.demoaction", "addtocart"]
         ],
         "view": "gauge",
         "stacked": false,
         "stat": "SampleCount",
         "period": 86400,
+     "liveData": true,
         "yAxis": {
           "left": {
             "min": 5,
@@ -129,19 +132,21 @@ resource "aws_cloudwatch_dashboard" "main" {
     },
     {
       "type": "metric",
-   "liveData": true,
+
+
 
       "width": 6,
       "height": 8,
       "properties": {
         "sparkline": true,
         "metrics": [
-          ["DemoMetrics", "getDiscounts", "$.functioncalled", "get_discounts"]
+          ["DemoMetrics", "getDiscounts", "$.demoaction", "get_discounts"]
         ],
         "view": "gauge",
         "stacked": false,
         "stat": "SampleCount",
         "period": 86400,
+     "liveData": true,
         "yAxis": {
           "left": {
             "min": 5,
@@ -154,17 +159,18 @@ resource "aws_cloudwatch_dashboard" "main" {
     },
     {
       "type": "metric",
-   "liveData": true,
+
 
       "width": 6,
       "height": 8,
       "properties": {
         "sparkline": true,
-        "metrics": [["DemoMetrics", "getCart", "$.functioncalled", "getcart"]],
+        "metrics": [["DemoMetrics", "getCart", "$.demoaction", "getcart"]],
         "view": "gauge",
         "stacked": false,
         "stat": "SampleCount",
         "period": 86400,
+     "liveData": true,
         "yAxis": {
           "left": {
             "min": 5,
@@ -177,7 +183,8 @@ resource "aws_cloudwatch_dashboard" "main" {
     },
     {
       "type": "metric",
-   "liveData": true,
+
+
 
       "width": 6,
       "height": 8,
@@ -187,7 +194,7 @@ resource "aws_cloudwatch_dashboard" "main" {
           [
             "DemoMetrics",
             "getProductbyId",
-            "$.functioncalled",
+            "$.demoaction",
             "getproductbyid"
           ]
         ],
@@ -195,6 +202,7 @@ resource "aws_cloudwatch_dashboard" "main" {
         "stacked": false,
         "stat": "SampleCount",
         "period": 86400,
+     "liveData": true,
         "yAxis": {
           "left": {
             "min": 5,
@@ -207,19 +215,21 @@ resource "aws_cloudwatch_dashboard" "main" {
     },
     {
       "type": "metric",
-   "liveData": true,
+
+
 
       "width": 6,
       "height": 8,
       "properties": {
         "sparkline": true,
         "metrics": [
-          ["DemoMetrics", "getProducts", "$.functioncalled", "getproducts"]
+          ["DemoMetrics", "getProducts", "$.demoaction", "getproducts"]
         ],
         "view": "gauge",
         "stacked": false,
         "stat": "SampleCount",
         "period": 86400,
+     "liveData": true,
         "yAxis": {
           "left": {
             "min": 5,
@@ -232,7 +242,8 @@ resource "aws_cloudwatch_dashboard" "main" {
     },
     {
       "type": "metric",
-   "liveData": true,
+
+
 
       "width": 6,
       "height": 8,
@@ -242,7 +253,7 @@ resource "aws_cloudwatch_dashboard" "main" {
           [
             "DemoMetrics",
             "removeDiscount",
-            "$.functioncalled",
+            "$.demoaction",
             "removediscounts"
           ]
         ],
@@ -250,6 +261,7 @@ resource "aws_cloudwatch_dashboard" "main" {
         "stacked": false,
         "stat": "SampleCount",
         "period": 86400,
+     "liveData": true,
         "yAxis": {
           "left": {
             "min": 5,
@@ -262,7 +274,6 @@ resource "aws_cloudwatch_dashboard" "main" {
     },
     {
       "type": "metric",
-   "liveData": true,
 
       "width": 6,
       "height": 8,
@@ -272,7 +283,7 @@ resource "aws_cloudwatch_dashboard" "main" {
           [
             "DemoMetrics",
             "removefromCart",
-            "$.functioncalled",
+            "$.demoaction",
             "removefromcart"
           ]
         ],
@@ -280,6 +291,7 @@ resource "aws_cloudwatch_dashboard" "main" {
         "stacked": false,
         "stat": "SampleCount",
         "period": 86400,
+     "liveData": true,
         "yAxis": {
           "left": {
             "min": 5,
@@ -292,19 +304,19 @@ resource "aws_cloudwatch_dashboard" "main" {
     },
     {
       "type": "metric",
-      "liveData": true,
 
       "width": 6,
       "height": 8,
       "properties": {
         "sparkline": true,
         "metrics": [
-          ["DemoMetrics", "removeProduct", "$.functioncalled", "removeproduct"]
+          ["DemoMetrics", "removeProduct", "$.demoaction", "removeproduct"]
         ],
         "view": "gauge",
         "stacked": false,
         "stat": "SampleCount",
         "period": 86400,
+     "liveData": true,
         "yAxis": {
           "left": {
             "min": 5,
@@ -334,7 +346,7 @@ resource "aws_cloudwatch_metric_alarm" "CloudWatchAlarm" {
   comparison_operator = each.value.metric_comparison_operator
   treat_missing_data  = each.value.metric_treat_missing_data
   dimensions = {
-      "$.functioncalled" = "$.functioncalled"
+    "$.demoaction" = each.value.dimenisonvalue
   }
   tags = merge(
     var.tags,
@@ -345,11 +357,11 @@ resource "aws_cloudwatch_metric_alarm" "CloudWatchAlarm" {
 }
 
 resource "aws_cloudwatch_composite_alarm" "CompositeAlarm" {
-  
+
   alarm_description = var.composite_alarm_description
   alarm_name        = var.composite_alarm_name
   alarm_actions     = [aws_sns_topic.aws_event_notifications.arn]
-  alarm_rule        = var.alarm_rules               
+  alarm_rule        = var.alarm_rules
   tags = merge(
     var.tags,
     {
