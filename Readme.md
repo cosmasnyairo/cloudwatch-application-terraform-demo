@@ -27,7 +27,7 @@ graph LR;
     id4(MetricDimension) -->id6(CloudwatchAlarms)
     id4(MetricDimension)-->id5(MetricWidget);
     id6(CloudwatchAlarms) -->id7(SnsTopic);
-    id5(MetricWidget)-->id8(CloudwatchDashboard?);
+    id5(MetricWidget)-->id8(CloudwatchDashboard);
 
 ```
 
